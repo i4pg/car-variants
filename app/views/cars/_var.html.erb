@@ -1,0 +1,20 @@
+<%= form_with(model: car,  data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |f| %>
+    <template data-nested-form-target="template">
+    <%= f.fields_for :variants, Variant.new, child_index: 'NEW_RECORD' do |todo_fields| %>
+      <%= render "todo_form", f: todo_fields %>
+    <% end %>
+  </template>
+
+  <%= f.fields_for :variants do |todo_fields| %>
+    <%= render "todo_form", f: todo_fields %>
+  <% end %>
+
+  <!-- Inserted elements will be injected before that target. -->
+  <div data-nested-form-target="target"></div>
+
+  <button type="button" data-action="nested-form#add">Add Variant</button>
+
+  <%= f.submit 'update Variants' %>
+    <br>
+<% end %>
+
